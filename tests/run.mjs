@@ -104,6 +104,9 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
       if (!ld.includes('"@type":"Article"')) fail(`${vpName} ${u}: article without Article structured data (section type missing?)`);
       if (!(await page.$("aside.cta"))) fail(`${vpName} ${u}: article without call to action`);
     }
+    // Raw Markdown leaking into the rendered text means broken source content.
+    const raw = await page.evaluate(() => document.querySelector("main")?.innerText.match(/(^|\s)#{2,6} \S|\\n|\bn{2}#{2}/)?.[0]);
+    if (raw) fail(`${vpName} ${u}: raw Markdown visible in page text (${JSON.stringify(raw)})`);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     if (overflow > 0) fail(`${vpName} ${u}: horizontal overflow of ${overflow}px`);
     const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]).analyze();
