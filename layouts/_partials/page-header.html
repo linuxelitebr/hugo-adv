@@ -8,6 +8,9 @@
     {{- if .meta }}
     <p class="page-meta">
       <span>{{ T "publishedOn" }} <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date | time.Format ":date_long" }}</time></span>
+      {{- if gt ($p.Lastmod.Format "2006-01-02") ($p.Date.Format "2006-01-02") }}
+      <span>{{ T "updatedOn" }} <time datetime="{{ $p.Lastmod.Format "2006-01-02" }}">{{ $p.Lastmod | time.Format ":date_long" }}</time></span>
+      {{- end }}
       <span>{{ T "readingTime" (dict "Count" ($p.Params.readingTime | default $p.ReadingTime)) }}</span>
     </p>
     {{- end }}

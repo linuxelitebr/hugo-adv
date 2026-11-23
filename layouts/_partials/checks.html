@@ -14,7 +14,8 @@
   {{- end -}}
 {{- end -}}
 {{- if hugo.IsProduction -}}
-  {{- if eq .Params.legalReview "pendente" }}{{ warnf "hugo-adv: %q has legalReview = \"pendente\"" .RelPermalink }}{{ end -}}
+  {{- /* Articles require explicit approval; other pages only when they declare a review status. */ -}}
+  {{- if partial "needs-review.html" . }}{{ warnf "hugo-adv: %q is not approved (legalReview must be \"aprovado\")" .RelPermalink }}{{ end -}}
   {{- $raw := printf "%s %s %s" .RawContent .Title (.Params.description | default "") -}}
   {{- if or (strings.Contains $raw "[A PREENCHER") (strings.Contains $raw "[VERIFICAR") -}}
     {{- warnf "hugo-adv: %q contains [A PREENCHER] or [VERIFICAR] placeholders" .RelPermalink -}}

@@ -77,7 +77,8 @@ Seções de conteúdo (nomes configuráveis em `params.sections`): `areas-de-atu
 ### Proteções de build
 
 - O build falha sem `params.firm.name` ou `params.firm.oabRegistration`.
-- Em produção (`hugo --environment production --panicOnWarning`), o build falha se houver `[A PREENCHER]`, `[VERIFICAR]` ou `legalReview = "pendente"` em qualquer página.
+- Em produção (`hugo --environment production --panicOnWarning`), o build falha se houver `[A PREENCHER]` ou `[VERIFICAR]` em qualquer página, se algum artigo não tiver `legalReview = "aprovado"` ou se outra página declarar `legalReview` diferente de `"aprovado"`.
+- Artigos exibem "Atualizado em" quando `lastmod` é posterior a `date`.
 - O tema gera `_headers` para a Cloudflare com CSP restritiva, HSTS e demais headers de segurança.
 
 ## Desenvolvimento

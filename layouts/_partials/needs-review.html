@@ -1,0 +1,4 @@
+{{- /* True when the page still needs legal review before publishing. */ -}}
+{{- $status := .Params.legalReview | default "" -}}
+{{- $isArticle := and .IsPage (eq .Type "articles") -}}
+{{- return (or (and $isArticle (ne $status "aprovado")) (and (ne $status "") (ne $status "aprovado"))) -}}
