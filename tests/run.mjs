@@ -17,6 +17,8 @@ const arg = (name, def) => {
 };
 const siteDir = path.resolve(arg("--site", path.join(root, "exampleSite")));
 const shots = arg("--screenshots", "");
+const articlesPath = arg("--articles", "/artigos/");
+const articleRe = new RegExp(`^${articlesPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^/]+/$`);
 const out = fs.mkdtempSync(path.join(os.tmpdir(), "hugo-adv-test-"));
 
 const BUDGET = { css: 30 * 1024, js: 5 * 1024 };
@@ -95,6 +97,12 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
     const expected = u === "/pagina-que-nao-existe/" ? 404 : 200;
     if (resp.status() !== expected) fail(`${vpName} ${u}: status ${resp.status()}`);
     for (const e of errors) if (!(expected === 404 && /status of 404/.test(e))) fail(`${vpName} ${u}: console error: ${e}`);
+    // Every article page must use the article layout: JSON-LD Article and the call to action.
+    if (articleRe.test(u)) {
+      const ld = await page.evaluate(() => [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent).join(""));
+      if (!ld.includes('"@type":"Article"')) fail(`${vpName} ${u}: article without Article structured data (section type missing?)`);
+      if (!(await page.$("aside.cta"))) fail(`${vpName} ${u}: article without call to action`);
+    }
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     if (overflow > 0) fail(`${vpName} ${u}: horizontal overflow of ${overflow}px`);
     const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]).analyze();
