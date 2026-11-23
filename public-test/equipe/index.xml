@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Equipe on Exemplo Advocacia</title>
+		<link>https://example.com/equipe/</link>
+		<description>Recent content in Equipe on Exemplo Advocacia</description>
+		<generator>Hugo</generator>
+		<language>pt-BR</language>
+		
+		
+		
+		
+			<atom:link href="https://example.com/equipe/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Maria Exemplo</title>
+				<link>https://example.com/equipe/maria-exemplo/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/equipe/maria-exemplo/</guid>
+				<description>&lt;p&gt;Biografia de exemplo. Formação, experiência e áreas de atuação, sem autopromoção.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>João Exemplo</title>
+				<link>https://example.com/equipe/joao-exemplo/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/equipe/joao-exemplo/</guid>
+				<description>&lt;p&gt;Biografia de exemplo.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

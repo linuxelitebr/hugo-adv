@@ -1,0 +1,15 @@
+{{- /* Light/dark logo without JavaScript. Width/height read from the SVG viewBox to avoid layout shift. */ -}}
+{{- $b := site.Params.brand -}}
+{{- $light := resources.Get ($b.logo | default "") -}}
+{{- if not $light }}{{ errorf "hugo-adv: params.brand.logo not found in assets" }}{{ end -}}
+{{- $dark := resources.Get ($b.logoDark | default "") | default $light -}}
+{{- $w := 200 }}{{ $h := 60 -}}
+{{- with findRESubmatch `viewBox="\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)` $light.Content 1 -}}
+  {{- $w = index (index . 0) 1 | float | math.Round | int }}{{ $h = index (index . 0) 2 | float | math.Round | int -}}
+{{- end -}}
+<picture>
+  {{- if ne $dark $light }}
+  <source srcset="{{ ($dark | fingerprint).RelPermalink }}" media="(prefers-color-scheme: dark)">
+  {{- end }}
+  <img src="{{ ($light | fingerprint).RelPermalink }}" alt="{{ site.Params.firm.name }}" width="{{ $w }}" height="{{ $h }}">
+</picture>

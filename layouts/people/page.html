@@ -1,0 +1,21 @@
+{{- define "main" }}
+<div class="section">
+  <div class="container person-profile">
+    {{- partial "person-photo.html" (dict "page" . "width" 640) }}
+    <div class="prose">
+      <span class="eyebrow">{{ T "ourTeam" }}</span>
+      <h1>{{ .Title }}</h1>
+      {{- with .Params.role }}<p class="lead">{{ . }}</p>{{ end }}
+      {{- with .Params.oab }}<p class="muted">{{ . }}</p>{{ end }}
+      {{ .Content }}
+      {{- with .Params.practices }}
+      <h2>{{ T "practiceAreas" }}</h2>
+      <ul>
+        {{- range . }}{{ with site.GetPage (printf "/%s/%s" site.Params.sections.practice .) }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ end }}
+      </ul>
+      {{- end }}
+      {{- partial "cta.html" . }}
+    </div>
+  </div>
+</div>
+{{- end }}

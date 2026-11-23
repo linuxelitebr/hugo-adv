@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://example.com/areas-de-atuacao/empresarial/</loc>
+  </url><url>
+    <loc>https://example.com/equipe/maria-exemplo/</loc>
+  </url><url>
+    <loc>https://example.com/areas-de-atuacao/civil/</loc>
+  </url><url>
+    <loc>https://example.com/equipe/joao-exemplo/</loc>
+  </url><url>
+    <loc>https://example.com/areas-de-atuacao/familia/</loc>
+  </url><url>
+    <loc>https://example.com/artigos/artigo-de-exemplo-familia/</loc>
+    <lastmod>2026-02-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/artigos/</loc>
+    <lastmod>2026-02-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/</loc>
+    <lastmod>2026-02-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/artigos/artigo-de-exemplo-contratos/</loc>
+    <lastmod>2026-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/areas-de-atuacao/</loc>
+  </url><url>
+    <loc>https://example.com/contato/</loc>
+  </url><url>
+    <loc>https://example.com/equipe/</loc>
+  </url><url>
+    <loc>https://example.com/o-escritorio/</loc>
+  </url><url>
+    <loc>https://example.com/privacidade/</loc>
+  </url>
+</urlset>

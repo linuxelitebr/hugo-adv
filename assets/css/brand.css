@@ -1,0 +1,44 @@
+{{- /*
+  Rendered with resources.ExecuteAsTemplate: brand tokens from site params.
+  Fonts are self-hosted from the site's assets (params.brand.fonts.files).
+*/ -}}
+{{- $c := site.Params.brand.colors -}}
+{{- $d := site.Params.brand.colorsDark -}}
+{{- $f := site.Params.brand.fonts -}}
+{{- range $f.files }}
+{{- $file := resources.Get .path }}
+{{- if not $file }}{{ errorf "hugo-adv: font file %q not found in assets" .path }}{{ end }}
+@font-face {
+  font-family: "{{ .family }}";
+  src: url("{{ ($file | fingerprint).RelPermalink }}") format("woff2");
+  font-weight: {{ .weight | default 400 }};
+  font-style: {{ .style | default "normal" }};
+  font-display: swap;
+}
+{{- end }}
+
+:root {
+  --font-heading: {{ with $f.heading }}"{{ . }}", {{ end }}Georgia, "Times New Roman", serif;
+  --font-body: {{ with $f.body }}"{{ . }}", {{ end }}system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --color-primary: {{ $c.primary }};
+  --color-primary-strong: {{ $c.primaryStrong }};
+  --color-ink: {{ $c.ink }};
+  --color-muted: {{ $c.muted }};
+  --color-surface: {{ $c.surface }};
+  --color-border: {{ $c.border }};
+  --color-bg: {{ $c.background | default "#FFFFFF" }};
+  --color-on-primary: {{ $c.onPrimary | default "#FFFFFF" }};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: {{ $d.primary }};
+    --color-primary-strong: {{ $d.primaryStrong }};
+    --color-ink: {{ $d.ink }};
+    --color-muted: {{ $d.muted }};
+    --color-surface: {{ $d.surface }};
+    --color-border: {{ $d.border }};
+    --color-bg: {{ $d.background | default "#121212" }};
+    --color-on-primary: {{ $d.onPrimary | default "#121212" }};
+  }
+}

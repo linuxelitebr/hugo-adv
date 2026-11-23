@@ -1,0 +1,22 @@
+{{- define "main" }}
+{{- partial "page-header.html" (dict "page" . "eyebrow" (T "practiceAreas")) }}
+{{- /* ContentBaseName is the folder name for page bundles and the file name otherwise. */}}
+{{- $slug := .File.ContentBaseName }}
+<div class="section">
+  <div class="container layout-aside">
+    <div class="prose">
+      {{ .Content }}
+      {{- partial "cta.html" . }}
+    </div>
+    {{- if site.Params.features.articles }}
+    {{- $related := where (where site.RegularPages "Type" "articles") "Params.practice" $slug }}
+    {{- with $related }}
+    <aside aria-labelledby="practice-articles">
+      <h2 id="practice-articles" class="eyebrow">{{ T "practiceArticles" }}</h2>
+      <ul class="grid">{{ range first 4 .ByDate.Reverse }}<li>{{ partial "card.html" (dict "page" . "level" 3) }}</li>{{ end }}</ul>
+    </aside>
+    {{- end }}
+    {{- end }}
+  </div>
+</div>
+{{- end }}

@@ -1,0 +1,6 @@
+{{- with site.Params.app.url }}
+  <a class="btn btn-secondary" href="{{ . }}">{{ site.Params.app.label | default (T "clientArea") }}</a>
+{{- end }}
+{{- with . }}
+  <a class="btn btn-primary" href="{{ .RelPermalink }}">{{ T "contactUs" }}</a>
+{{- end }}

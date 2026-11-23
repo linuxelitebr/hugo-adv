@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale | default "pt-BR" }}">
+  <head>
+    {{- partial "head.html" . }}
+  </head>
+  <body>
+    {{- partial "checks.html" . }}
+    <a class="skip-link" href="#main">{{ T "skipToContent" }}</a>
+    {{- partial "header.html" . }}
+    <main id="main" tabindex="-1">
+      {{- if and (eq .Params.legalReview "pendente") (not hugo.IsProduction) }}
+        <div class="container"><p class="notice" role="note">{{ T "legalReviewPending" }}</p></div>
+      {{- end }}
+      {{- block "main" . }}{{ end }}
+    </main>
+    {{- partial "footer.html" . }}
+  </body>
+</html>

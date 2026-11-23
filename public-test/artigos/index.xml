@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Artigos on Exemplo Advocacia</title>
+		<link>https://example.com/artigos/</link>
+		<description>Recent content in Artigos on Exemplo Advocacia</description>
+		<generator>Hugo</generator>
+		<language>pt-BR</language>
+		
+		
+		
+		
+			<lastBuildDate>Tue, 10 Feb 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://example.com/artigos/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Artigo de exemplo sobre família</title>
+				<link>https://example.com/artigos/artigo-de-exemplo-familia/</link>
+				<pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+				<guid>https://example.com/artigos/artigo-de-exemplo-familia/</guid>
+				<description>&lt;p&gt;Parágrafo introdutório de exemplo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;em-resumo&#34;&gt;Em resumo&lt;/h2&gt;&#xA;&lt;p&gt;Resumo de exemplo.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Artigo de exemplo sobre contratos</title>
+				<link>https://example.com/artigos/artigo-de-exemplo-contratos/</link>
+				<pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate>
+				<guid>https://example.com/artigos/artigo-de-exemplo-contratos/</guid>
+				<description>&lt;p&gt;Parágrafo introdutório de exemplo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;primeiro-ponto&#34;&gt;Primeiro ponto&lt;/h2&gt;&#xA;&lt;p&gt;Texto de exemplo com uma lista:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Item um.&lt;/li&gt;&#xA;&lt;li&gt;Item dois.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;em-resumo&#34;&gt;Em resumo&lt;/h2&gt;&#xA;&lt;p&gt;Resumo de exemplo.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

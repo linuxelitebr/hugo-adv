@@ -1,0 +1,21 @@
+{{- define "main" }}
+{{- partial "page-header.html" (dict "page" . "eyebrow" site.Params.firm.name) }}
+<div class="section">
+  <div class="container">
+    {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    {{- $pager := .Paginate .Pages.ByDate.Reverse 12 }}
+    {{- with $pager.Pages }}
+    <ul class="grid grid-3">{{ range . }}<li>{{ partial "card.html" (dict "page" . "level" 2) }}</li>{{ end }}</ul>
+    {{- else }}
+    <p class="muted">{{ T "noArticles" }}</p>
+    {{- end }}
+    {{- if gt $pager.TotalPages 1 }}
+    <nav class="pagination" aria-label="{{ T "articles" }}">
+      {{- with $pager.Prev }}<a class="btn btn-secondary" href="{{ .URL }}" rel="prev">&larr;</a>{{ else }}<span></span>{{ end }}
+      <span class="muted">{{ $pager.PageNumber }} / {{ $pager.TotalPages }}</span>
+      {{- with $pager.Next }}<a class="btn btn-secondary" href="{{ .URL }}" rel="next">&rarr;</a>{{ else }}<span></span>{{ end }}
+    </nav>
+    {{- end }}
+  </div>
+</div>
+{{- end }}

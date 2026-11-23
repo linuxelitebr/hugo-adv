@@ -1,0 +1,61 @@
+{{- $firm := site.Params.firm -}}
+{{- $brand := site.Params.brand -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $title := cond .IsHome (printf "%s | %s" $firm.name ($firm.tagline | default (T "practiceAreas"))) (printf "%s | %s" .Title $firm.name) }}
+<title>{{ $title }}</title>
+{{- $desc := .Description | default (.Summary | plainify | strings.TrimSpace) | default site.Params.description }}
+<meta name="description" content="{{ $desc | truncate 160 }}">
+<link rel="canonical" href="{{ .Permalink }}">
+{{- if not hugo.IsProduction }}
+<meta name="robots" content="noindex, nofollow">
+{{- end }}
+{{- $light := site.Params.brand.colors -}}
+<meta name="theme-color" content="{{ $light.background | default "#FFFFFF" }}">
+
+{{- /* Styles: theme base + brand tokens, minified and fingerprinted. */}}
+{{- $brandCSS := resources.Get "css/brand.css" | resources.ExecuteAsTemplate "css/brand.css" . }}
+{{- $main := resources.Get "css/main.css" }}
+{{- $css := slice $brandCSS $main | resources.Concat "css/site.css" | minify | fingerprint "sha384" }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+
+{{- /* Preload heading font for faster first paint. */}}
+{{- range first 1 (where ($brand.fonts.files | default slice) "preload" true) }}
+  {{- with resources.Get .path }}
+<link rel="preload" href="{{ (. | fingerprint).RelPermalink }}" as="font" type="font/woff2" crossorigin>
+  {{- end }}
+{{- end }}
+
+{{- with $brand.favicon }}{{ with resources.Get . }}
+<link rel="icon" href="{{ (. | fingerprint).RelPermalink }}" type="image/svg+xml">
+{{- end }}{{ end }}
+{{- with $brand.appleTouchIcon }}{{ with resources.Get . }}
+<link rel="apple-touch-icon" href="{{ (. | fingerprint).RelPermalink }}">
+{{- end }}{{ end }}
+
+{{- /* Open Graph */}}
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+<meta property="og:site_name" content="{{ $firm.name }}">
+<meta property="og:title" content="{{ cond .IsHome $firm.name .Title }}">
+<meta property="og:description" content="{{ $desc | truncate 200 }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:locale" content="{{ replace (site.Language.Locale | default "pt-BR") "-" "_" }}">
+{{- with $brand.ogImage }}{{ with resources.Get . }}
+<meta property="og:image" content="{{ (. | fingerprint).Permalink }}">
+<meta name="twitter:card" content="summary_large_image">
+{{- end }}{{ end }}
+
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ $firm.name }}">
+{{- end }}
+
+{{- partial "jsonld.html" . }}
+
+{{- /* Optional privacy-friendly analytics (no cookies). Allowed in CSP by the _headers template. */}}
+{{- with site.Params.analytics.cloudflareToken }}{{ if hugo.IsProduction }}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ . }}"}'></script>
+{{- end }}{{ end }}
+
+{{- if .IsHome }}
+  {{- with resources.Get "headers.tmpl" | resources.ExecuteAsTemplate "_headers" . }}{{ .Publish }}{{ end }}
+{{- end }}

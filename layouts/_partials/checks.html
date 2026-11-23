@@ -1,0 +1,22 @@
+{{- /*
+  Build-time guards. In production any warning fails the build when Hugo runs
+  with --panicOnWarning (recommended in CI and deploy).
+*/ -}}
+{{- $firm := site.Params.firm -}}
+{{- if .IsHome -}}
+  {{- if not $firm.name }}{{ errorf "hugo-adv: params.firm.name is required" }}{{ end -}}
+  {{- if not $firm.oabRegistration }}{{ errorf "hugo-adv: params.firm.oabRegistration is required (OAB advertising rules require the firm's registration)" }}{{ end -}}
+  {{- if hugo.IsProduction -}}
+    {{- $flat := jsonify $firm -}}
+    {{- if or (strings.Contains $flat "[A PREENCHER") (strings.Contains $flat "[VERIFICAR") -}}
+      {{- warnf "hugo-adv: params.firm still contains [A PREENCHER] or [VERIFICAR] placeholders" -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if hugo.IsProduction -}}
+  {{- if eq .Params.legalReview "pendente" }}{{ warnf "hugo-adv: %q has legalReview = \"pendente\"" .RelPermalink }}{{ end -}}
+  {{- $raw := printf "%s %s %s" .RawContent .Title (.Params.description | default "") -}}
+  {{- if or (strings.Contains $raw "[A PREENCHER") (strings.Contains $raw "[VERIFICAR") -}}
+    {{- warnf "hugo-adv: %q contains [A PREENCHER] or [VERIFICAR] placeholders" .RelPermalink -}}
+  {{- end -}}
+{{- end -}}

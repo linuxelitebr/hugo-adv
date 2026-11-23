@@ -1,0 +1,15 @@
+{{- /* Args: dict "page" . "eyebrow" string "meta" bool */ -}}
+{{- $p := .page -}}
+<header class="page-header">
+  <div class="container">
+    {{- with .eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
+    <h1>{{ $p.Title }}</h1>
+    {{- with $p.Description }}<p class="lead">{{ . }}</p>{{ end }}
+    {{- if .meta }}
+    <p class="page-meta">
+      <span>{{ T "publishedOn" }} <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date | time.Format ":date_long" }}</time></span>
+      <span>{{ T "readingTime" (dict "Count" ($p.Params.readingTime | default $p.ReadingTime)) }}</span>
+    </p>
+    {{- end }}
+  </div>
+</header>

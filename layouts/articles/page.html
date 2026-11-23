@@ -1,0 +1,18 @@
+{{- define "main" }}
+{{- $practice := site.GetPage (printf "/%s/%s" site.Params.sections.practice (.Params.practice | default "")) }}
+{{- partial "page-header.html" (dict "page" . "eyebrow" (cond (ne $practice nil) ($practice.Title | default (T "articles")) (T "articles")) "meta" true) }}
+<div class="section">
+  <div class="container">
+    <article class="prose">
+      {{ .Content }}
+      {{- partial "cta.html" . }}
+    </article>
+    {{- $related := where (where (where site.RegularPages "Type" "articles") "Params.practice" .Params.practice) "Permalink" "ne" .Permalink }}
+    {{- with $related }}
+    <hr>
+    <h2 class="eyebrow">{{ T "relatedArticles" }}</h2>
+    <ul class="grid grid-3">{{ range first 3 .ByDate.Reverse }}<li>{{ partial "card.html" (dict "page" . "level" 3) }}</li>{{ end }}</ul>
+    {{- end }}
+  </div>
+</div>
+{{- end }}

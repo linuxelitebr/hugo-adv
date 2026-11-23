@@ -1,0 +1,14 @@
+{
+  "name": "hugo-adv-tests",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end checks for the hugo-adv theme (not part of any site build)",
+  "scripts": {
+    "test": "node run.mjs",
+    "test:shots": "node run.mjs --screenshots screenshots"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "playwright": "1.65.1"
+  }
+}

@@ -1,0 +1,19 @@
+{{- /* Schema.org structured data, built as a dict and serialized (no string concatenation). */ -}}
+{{- $f := site.Params.firm -}}
+{{- $org := dict "@type" "LegalService" "@id" (printf "%s#organization" site.Home.Permalink) "name" $f.name "url" site.Home.Permalink -}}
+{{- with $f.legalName }}{{ $org = merge $org (dict "legalName" .) }}{{ end -}}
+{{- with $f.phone }}{{ $org = merge $org (dict "telephone" .) }}{{ end -}}
+{{- with $f.email }}{{ $org = merge $org (dict "email" .) }}{{ end -}}
+{{- with $f.hours }}{{ $org = merge $org (dict "openingHours" .) }}{{ end -}}
+{{- with resources.Get (site.Params.brand.logo | default "") }}{{ $org = merge $org (dict "logo" (. | fingerprint).Permalink) }}{{ end -}}
+{{- with $f.address -}}
+  {{- $org = merge $org (dict "address" (dict "@type" "PostalAddress" "streetAddress" .street "addressLocality" .city "addressRegion" .state "postalCode" .postalCode "addressCountry" (.country | default "BR"))) -}}
+{{- end -}}
+{{- with $f.social }}{{ $s := slice }}{{ range . }}{{ $s = $s | append .url }}{{ end }}{{ $org = merge $org (dict "sameAs" $s) }}{{ end -}}
+{{- $graph := slice $org -}}
+{{- if and .IsPage (eq .Type "articles") -}}
+  {{- $graph = $graph | append (dict "@type" "Article" "headline" .Title "description" .Description "datePublished" (.Date.Format "2006-01-02") "dateModified" (.Lastmod.Format "2006-01-02") "inLanguage" site.Language.Locale "mainEntityOfPage" .Permalink "publisher" (dict "@id" (printf "%s#organization" site.Home.Permalink))) -}}
+{{- else if and .IsPage (eq .Type "people") -}}
+  {{- $graph = $graph | append (dict "@type" "Person" "name" .Title "jobTitle" (.Params.role | default "") "url" .Permalink "worksFor" (dict "@id" (printf "%s#organization" site.Home.Permalink))) -}}
+{{- end -}}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>

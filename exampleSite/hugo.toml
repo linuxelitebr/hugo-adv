@@ -1,0 +1,58 @@
+# Fictitious example site for the hugo-adv theme. All data below is made up.
+baseURL = "https://example.com/"
+locale = "pt-BR"
+title = "Exemplo Advocacia"
+theme = "hugo-adv"
+themesDir = "../.."
+disableKinds = ["taxonomy", "term"]
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 12
+
+[[menus.main]]
+  name = "O escritório"
+  pageRef = "/o-escritorio"
+  weight = 10
+[[menus.main]]
+  name = "Áreas de atuação"
+  pageRef = "/areas-de-atuacao"
+  weight = 20
+[[menus.main]]
+  name = "Equipe"
+  pageRef = "/equipe"
+  weight = 30
+[[menus.main]]
+  name = "Artigos"
+  pageRef = "/artigos"
+  weight = 40
+
+[params]
+  description = "Escritório de advocacia fictício usado para demonstrar o tema hugo-adv."
+
+  [params.firm]
+    name = "Exemplo Advocacia"
+    legalName = "Exemplo Sociedade de Advogados"
+    tagline = "Advocacia empresarial e cível"
+    oabRegistration = "OAB/SP 00.000"
+    cnpj = "00.000.000/0001-00"
+    email = "contato@example.com"
+    phone = "(11) 0000-0000"
+    whatsapp = "5511900000000"
+    whatsappDisplay = "(11) 90000-0000"
+    hours = "Segunda a sexta, das 9h às 18h"
+    [params.firm.address]
+      street = "Rua Exemplo, 100, sala 1"
+      district = "Centro"
+      city = "São Paulo"
+      state = "SP"
+      postalCode = "00000-000"
+      mapUrl = "https://www.openstreetmap.org/"
+    [[params.firm.social]]
+      name = "LinkedIn"
+      url = "https://www.linkedin.com/"
+
+  [params.brand]
+    logo = "brand/logo.svg"
+    logoDark = "brand/logo-dark.svg"
+    favicon = "brand/favicon.svg"

@@ -1,0 +1,33 @@
+{{- $f := site.Params.firm -}}
+{{- $privacy := site.GetPage (printf "/%s" site.Params.sections.privacy) -}}
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        {{- partial "logo.html" . }}
+        {{- with $f.tagline }}<p class="muted">{{ . }}</p>{{ end }}
+      </div>
+      <nav aria-label="{{ T "footerNavigation" }}">
+        <h2>{{ T "menu" }}</h2>
+        <ul>
+          {{- range site.Menus.main }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
+          {{- with $privacy }}<li><a href="{{ .RelPermalink }}">{{ T "privacyPolicy" }}</a></li>{{ end }}
+        </ul>
+      </nav>
+      <div>
+        <h2>{{ T "contactDetails" }}</h2>
+        <ul>
+          {{- with $f.phone }}<li><a href="tel:{{ replaceRE `[^\d+]` "" . }}">{{ . }}</a></li>{{ end }}
+          {{- with $f.email }}<li><a href="mailto:{{ . }}">{{ . }}</a></li>{{ end }}
+          {{- with $f.address }}<li>{{ .street }}{{ with .city }}, {{ . }}{{ end }}{{ with .state }}/{{ . }}{{ end }}</li>{{ end }}
+          {{- range $f.social }}<li><a href="{{ .url }}" rel="noopener" target="_blank">{{ .name }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a></li>{{ end }}
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>{{ $f.legalName | default $f.name }} · {{ T "oabRegistration" }}: {{ $f.oabRegistration }}{{ with $f.cnpj }} · {{ T "cnpj" }}: {{ . }}{{ end }}</p>
+      <p>{{ T "legalNotice" }}</p>
+      <p>&copy; {{ now.Year }} {{ $f.legalName | default $f.name }}. {{ T "allRightsReserved" }}</p>
+    </div>
+  </div>
+</footer>

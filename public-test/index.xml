@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Início on Exemplo Advocacia</title>
+		<link>https://example.com/</link>
+		<description>Recent content in Início on Exemplo Advocacia</description>
+		<generator>Hugo</generator>
+		<language>pt-BR</language>
+		
+		
+		
+		
+			<lastBuildDate>Tue, 10 Feb 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Direito Empresarial</title>
+				<link>https://example.com/areas-de-atuacao/empresarial/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/areas-de-atuacao/empresarial/</guid>
+				<description>&lt;p&gt;Texto de exemplo sobre a área de Direito Empresarial. Explique em linguagem simples os temas mais comuns e quando procurar orientação.&lt;/p&gt;&#xA;&lt;h2 id=&#34;temas-frequentes&#34;&gt;Temas frequentes&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Primeiro tema de exemplo.&lt;/li&gt;&#xA;&lt;li&gt;Segundo tema de exemplo.&lt;/li&gt;&#xA;&lt;li&gt;Terceiro tema de exemplo.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>Maria Exemplo</title>
+				<link>https://example.com/equipe/maria-exemplo/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/equipe/maria-exemplo/</guid>
+				<description>&lt;p&gt;Biografia de exemplo. Formação, experiência e áreas de atuação, sem autopromoção.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Direito Civil</title>
+				<link>https://example.com/areas-de-atuacao/civil/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/areas-de-atuacao/civil/</guid>
+				<description>&lt;p&gt;Texto de exemplo sobre a área de Direito Civil. Explique em linguagem simples os temas mais comuns e quando procurar orientação.&lt;/p&gt;&#xA;&lt;h2 id=&#34;temas-frequentes&#34;&gt;Temas frequentes&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Primeiro tema de exemplo.&lt;/li&gt;&#xA;&lt;li&gt;Segundo tema de exemplo.&lt;/li&gt;&#xA;&lt;li&gt;Terceiro tema de exemplo.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>João Exemplo</title>
+				<link>https://example.com/equipe/joao-exemplo/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/equipe/joao-exemplo/</guid>
+				<description>&lt;p&gt;Biografia de exemplo.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Direito de Família</title>
+				<link>https://example.com/areas-de-atuacao/familia/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/areas-de-atuacao/familia/</guid>
+				<description>&lt;p&gt;Texto de exemplo sobre a área de Direito de Família. Explique em linguagem simples os temas mais comuns e quando procurar orientação.&lt;/p&gt;&#xA;&lt;h2 id=&#34;temas-frequentes&#34;&gt;Temas frequentes&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Primeiro tema de exemplo.&lt;/li&gt;&#xA;&lt;li&gt;Segundo tema de exemplo.&lt;/li&gt;&#xA;&lt;li&gt;Terceiro tema de exemplo.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>Artigo de exemplo sobre família</title>
+				<link>https://example.com/artigos/artigo-de-exemplo-familia/</link>
+				<pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+				<guid>https://example.com/artigos/artigo-de-exemplo-familia/</guid>
+				<description>&lt;p&gt;Parágrafo introdutório de exemplo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;em-resumo&#34;&gt;Em resumo&lt;/h2&gt;&#xA;&lt;p&gt;Resumo de exemplo.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Artigo de exemplo sobre contratos</title>
+				<link>https://example.com/artigos/artigo-de-exemplo-contratos/</link>
+				<pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate>
+				<guid>https://example.com/artigos/artigo-de-exemplo-contratos/</guid>
+				<description>&lt;p&gt;Parágrafo introdutório de exemplo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;primeiro-ponto&#34;&gt;Primeiro ponto&lt;/h2&gt;&#xA;&lt;p&gt;Texto de exemplo com uma lista:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Item um.&lt;/li&gt;&#xA;&lt;li&gt;Item dois.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;em-resumo&#34;&gt;Em resumo&lt;/h2&gt;&#xA;&lt;p&gt;Resumo de exemplo.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Contato</title>
+				<link>https://example.com/contato/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/contato/</guid>
+				<description>&lt;p&gt;Escolha o canal de sua preferência. Respondemos em até um dia útil.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>O escritório</title>
+				<link>https://example.com/o-escritorio/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/o-escritorio/</guid>
+				<description>&lt;p&gt;Texto institucional de exemplo. Descreva a trajetória do escritório, os valores e a forma de atendimento, sem promessa de resultado.&lt;/p&gt;&#xA;&lt;h2 id=&#34;forma-de-trabalho&#34;&gt;Forma de trabalho&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Atendimento com prazo de retorno definido.&lt;/li&gt;&#xA;&lt;li&gt;Comunicação clara sobre cada etapa.&lt;/li&gt;&#xA;&lt;li&gt;Sigilo e proteção de dados.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>Política de privacidade</title>
+				<link>https://example.com/privacidade/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://example.com/privacidade/</guid>
+				<description>&lt;p&gt;Texto de exemplo. Cada escritório deve publicar a própria política, revisada juridicamente.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

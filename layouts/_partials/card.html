@@ -1,0 +1,12 @@
+{{- /* Generic card for practice areas and articles. Args: page, level (heading level, default 3). */ -}}
+{{- $lvl := .level | default 3 -}}
+{{- with .page -}}
+<article class="card">
+  {{- if eq .Type "articles" }}{{ with site.GetPage (printf "/%s/%s" site.Params.sections.practice .Params.practice) }}<span class="eyebrow">{{ .Title }}</span>{{ end }}{{ end }}
+  <h{{ $lvl }} class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h{{ $lvl }}>
+  <p>{{ .Description | default (.Summary | plainify) | truncate 180 }}</p>
+  {{- if eq .Type "articles" }}
+  <p class="card-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time> · {{ T "readingTime" (dict "Count" (.Params.readingTime | default .ReadingTime)) }}</p>
+  {{- end }}
+</article>
+{{- end }}

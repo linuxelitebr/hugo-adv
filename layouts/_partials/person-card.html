@@ -1,0 +1,12 @@
+{{- /* Args: page, level (heading level, default 3). */ -}}
+{{- $lvl := .level | default 3 -}}
+{{- with .page }}
+<article class="person-card">
+  {{- partial "person-photo.html" (dict "page" . "width" 480) }}
+  <div>
+    <h{{ $lvl }} class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h{{ $lvl }}>
+    {{- with .Params.role }}<p class="person-role">{{ . }}</p>{{ end }}
+    {{- with .Params.oab }}<p class="person-role">{{ . }}</p>{{ end }}
+  </div>
+</article>
+{{- end }}

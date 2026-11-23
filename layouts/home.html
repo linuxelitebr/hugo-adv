@@ -1,0 +1,82 @@
+{{- define "main" }}
+{{- $s := site.Params.sections }}
+{{- $practice := site.GetPage (printf "/%s" $s.practice) }}
+{{- $people := site.GetPage (printf "/%s" $s.people) }}
+{{- $articles := site.GetPage (printf "/%s" $s.articles) }}
+{{- $contact := site.GetPage (printf "/%s" $s.contact) }}
+{{- $h := site.Params.home }}
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">{{ .Params.hero.eyebrow | default site.Params.firm.name }}</span>
+    <h1>{{ .Params.hero.title | default .Title }}</h1>
+    {{- with .Params.hero.lead }}<p class="lead">{{ . }}</p>{{ end }}
+    <div class="btn-group">
+      {{- with $contact }}<a class="btn btn-primary" href="{{ .RelPermalink }}">{{ T "contactUs" }}</a>{{ end }}
+      {{- with $practice }}<a class="btn btn-secondary" href="{{ .RelPermalink }}">{{ T "practiceAreas" }}</a>{{ end }}
+    </div>
+  </div>
+</section>
+
+{{- with $practice }}{{ with .Pages }}
+<section class="section" aria-labelledby="home-practice">
+  <div class="container">
+    <div class="section-head">
+      <div>{{ with $.Params.practiceTitle }}<span class="eyebrow">{{ T "practiceAreas" }}</span>{{ end }}<h2 id="home-practice">{{ $.Params.practiceTitle | default (T "practiceAreas") }}</h2></div>
+      <a class="link-arrow" href="{{ $practice.RelPermalink }}">{{ T "seeAllPracticeAreas" }}{{ partial "icon.html" "arrow" }}</a>
+    </div>
+    <ul class="grid grid-3">
+      {{- range first $h.practiceLimit .ByWeight }}<li>{{ partial "card.html" (dict "page" . "level" 3) }}</li>{{ end }}
+    </ul>
+  </div>
+</section>
+{{- end }}{{ end }}
+
+{{- with .Content }}
+<section class="section section-alt" aria-labelledby="home-about">
+  <div class="container"><div class="prose">
+    {{- with $.Params.aboutTitle }}<span class="eyebrow">{{ T "aboutTheFirm" }}</span>{{ end }}
+    <h2 id="home-about">{{ $.Params.aboutTitle | default (T "aboutTheFirm") }}</h2>
+    {{ . }}
+    {{- with $.Params.aboutLink }}{{ with site.GetPage . }}<a class="link-arrow" href="{{ .RelPermalink }}">{{ T "learnMore" }}{{ partial "icon.html" "arrow" }}</a>{{ end }}{{ end }}
+  </div></div>
+</section>
+{{- end }}
+
+{{- with $people }}{{ with .Pages }}
+<section class="section" aria-labelledby="home-people">
+  <div class="container">
+    <div class="section-head">
+      <div>{{ with $.Params.peopleTitle }}<span class="eyebrow">{{ T "ourTeam" }}</span>{{ end }}<h2 id="home-people">{{ $.Params.peopleTitle | default (T "ourTeam") }}</h2></div>
+      <a class="link-arrow" href="{{ $people.RelPermalink }}">{{ T "seeTeam" }}{{ partial "icon.html" "arrow" }}</a>
+    </div>
+    <ul class="grid grid-people">
+      {{- range first $h.peopleLimit .ByWeight }}<li>{{ partial "person-card.html" (dict "page" . "level" 3) }}</li>{{ end }}
+    </ul>
+  </div>
+</section>
+{{- end }}{{ end }}
+
+{{- if site.Params.features.articles }}{{ with $articles }}{{ with .Pages }}
+<section class="section section-alt" aria-labelledby="home-articles">
+  <div class="container">
+    <div class="section-head">
+      <div><h2 id="home-articles">{{ T "latestArticles" }}</h2></div>
+      <a class="link-arrow" href="{{ $articles.RelPermalink }}">{{ T "seeAllArticles" }}{{ partial "icon.html" "arrow" }}</a>
+    </div>
+    <ul class="grid grid-3">
+      {{- range first $h.articlesLimit .ByDate.Reverse }}<li>{{ partial "card.html" (dict "page" . "level" 3) }}</li>{{ end }}
+    </ul>
+  </div>
+</section>
+{{- end }}{{ end }}{{ end }}
+
+{{- with $contact }}
+<section class="section cta-band" aria-labelledby="home-cta">
+  <div class="container">
+    <h2 id="home-cta">{{ T "ctaTitle" }}</h2>
+    <a class="btn" href="{{ .RelPermalink }}">{{ T "contactUs" }}</a>
+  </div>
+</section>
+{{- end }}
+{{- end }}

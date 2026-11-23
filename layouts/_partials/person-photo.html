@@ -1,0 +1,9 @@
+{{- /* Args: page, width. Uses .Params.photo from page bundle or assets; falls back to a neutral placeholder. */ -}}
+{{- $p := .page -}}
+{{- $img := or ($p.Resources.GetMatch "photo.*") (resources.Get ($p.Params.photo | default "")) -}}
+{{- if and $img (ne $img.MediaType.SubType "svg") -}}
+  {{- $r := $img.Fill (printf "%dx%d webp q80 Center" .width (div (mul .width 5) 4)) -}}
+  <img class="person-photo" src="{{ $r.RelPermalink }}" width="{{ $r.Width }}" height="{{ $r.Height }}" alt="{{ $p.Title }}" loading="lazy" decoding="async">
+{{- else -}}
+  <svg class="person-photo person-placeholder" viewBox="0 0 400 500" role="img" aria-label="{{ $p.Title }}: {{ T "placeholderPhoto" }}"><circle cx="200" cy="190" r="78"/><path d="M60 500c0-92 63-160 140-160s140 68 140 160z"/></svg>
+{{- end -}}

@@ -1,0 +1,9 @@
+{{- define "main" }}
+{{- partial "page-header.html" (dict "page" .) }}
+<div class="section">
+  <div class="container">
+    {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    <ul class="grid grid-3">{{ range .Pages }}<li>{{ partial "card.html" (dict "page" . "level" 2) }}</li>{{ end }}</ul>
+  </div>
+</div>
+{{- end }}

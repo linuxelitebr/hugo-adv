@@ -1,0 +1,47 @@
+# Theme defaults. Sites override any of these in their own hugo.toml.
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.158.0"
+
+[markup.goldmark.renderer]
+  # No raw HTML in Markdown: content stays safe under a strict CSP.
+  unsafe = false
+
+[params]
+  # Content sections used by the theme. Change only if your folders differ.
+  [params.sections]
+    practice = "areas-de-atuacao"
+    people = "equipe"
+    articles = "artigos"
+    contact = "contato"
+    privacy = "privacidade"
+
+  [params.features]
+    articles = true
+    # Contact form posts to a same-origin Worker endpoint. Off until it exists.
+    contactForm = false
+    contactFormAction = "/api/contact"
+
+  [params.home]
+    practiceLimit = 6
+    peopleLimit = 3
+    articlesLimit = 3
+
+  # Default palette (neutral). Sites set their own brand colors.
+  [params.brand.colors]
+    primary = "#1F4E79"
+    primaryStrong = "#163A5A"
+    ink = "#1E1E1E"
+    muted = "#555555"
+    surface = "#F6F5F1"
+    border = "#E2E0DA"
+  [params.brand.colorsDark]
+    primary = "#8DB8E0"
+    primaryStrong = "#B5D2EC"
+    ink = "#F2F2EE"
+    muted = "#B9B9B4"
+    surface = "#1B1B1B"
+    border = "#33332F"
+    background = "#121212"

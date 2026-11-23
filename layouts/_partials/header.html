@@ -1,0 +1,26 @@
+{{- $current := . -}}
+{{- $contact := site.GetPage (printf "/%s" site.Params.sections.contact) -}}
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="{{ "/" | relURL }}" aria-label="{{ site.Params.firm.name }}, {{ T "home" }}">
+      {{- partial "logo.html" (dict "class" "") }}
+    </a>
+
+    <nav class="nav-desktop" aria-label="{{ T "mainNavigation" }}">
+      {{- partial "nav-list.html" $current }}
+      {{- partial "header-actions.html" $contact }}
+    </nav>
+
+    {{- /* Mobile menu: native <details>, works without JavaScript. */}}
+    <details class="nav-mobile">
+      <summary>
+        {{- partial "icon.html" "menu" }}
+        <span>{{ T "menu" }}</span>
+      </summary>
+      <nav class="nav-panel" aria-label="{{ T "mainNavigation" }}">
+        {{- partial "nav-list.html" $current }}
+        {{- partial "header-actions.html" $contact }}
+      </nav>
+    </details>
+  </div>
+</header>

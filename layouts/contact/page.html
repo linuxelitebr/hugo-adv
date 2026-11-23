@@ -1,0 +1,16 @@
+{{- define "main" }}
+{{- partial "page-header.html" (dict "page" .) }}
+<div class="section">
+  <div class="container layout-aside">
+    <div class="prose">
+      {{ .Content }}
+      {{- partial "contact-details.html" . }}
+    </div>
+    {{- with site.Params.firm.whatsapp }}
+    <aside>
+      <a class="btn btn-primary" href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ partial "icon.html" "chat" }}{{ T "openWhatsapp" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>
+    </aside>
+    {{- end }}
+  </div>
+</div>
+{{- end }}
