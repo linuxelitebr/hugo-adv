@@ -17,9 +17,10 @@
       <div>
         <h2>{{ T "contactDetails" }}</h2>
         <ul>
-          {{- with $f.phone }}<li><a href="tel:{{ replaceRE `[^\d+]` "" . }}">{{ . }}</a></li>{{ end }}
+          {{- with $f.whatsapp }}<li><a href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ T "whatsapp" }}: {{ $f.whatsappDisplay | default . }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a></li>{{ end }}
+          {{- with $f.phone }}<li><a href="tel:{{ replaceRE `[^\d+]` "" . }}">{{ T "phone" }}: {{ . }}</a></li>{{ end }}
           {{- with $f.email }}<li><a href="mailto:{{ . }}">{{ . }}</a></li>{{ end }}
-          {{- with $f.address }}<li>{{ .street }}{{ with .city }}, {{ . }}{{ end }}{{ with .state }}/{{ . }}{{ end }}</li>{{ end }}
+          {{- with partial "address-text.html" (dict "short" true) }}<li>{{ . }}</li>{{ end }}
           {{- range $f.social }}<li><a href="{{ .url }}" rel="noopener" target="_blank">{{ .name }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a></li>{{ end }}
         </ul>
       </div>

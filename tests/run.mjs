@@ -87,7 +87,8 @@ const viewports = { desktop: { width: 1280, height: 900 }, mobile: { width: 375,
 const browser = await chromium.launch();
 const linksSeen = new Set();
 for (const [vpName, viewport] of Object.entries(viewports)) {
-  const ctx = await browser.newContext({ viewport, colorScheme: "light" });
+  // Reduced motion: axe must evaluate the final visual state, not frames of entrance animations.
+  const ctx = await browser.newContext({ viewport, colorScheme: "light", reducedMotion: "reduce" });
   for (const u of urls) {
     const page = await ctx.newPage();
     const errors = [];
@@ -116,7 +117,7 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
     await page.close();
   }
   // Dark mode spot check on home for contrast.
-  const dark = await browser.newContext({ viewport, colorScheme: "dark" });
+  const dark = await browser.newContext({ viewport, colorScheme: "dark", reducedMotion: "reduce" });
   const dp = await dark.newPage();
   await dp.goto(`${base}/`, { waitUntil: "networkidle" });
   const axeDark = await new AxeBuilder({ page: dp }).withTags(["wcag2aa"]).analyze();

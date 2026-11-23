@@ -6,8 +6,11 @@
 {{- with $f.email }}{{ $org = merge $org (dict "email" .) }}{{ end -}}
 {{- with $f.hours }}{{ $org = merge $org (dict "openingHours" .) }}{{ end -}}
 {{- with resources.Get (site.Params.brand.logo | default "") }}{{ $org = merge $org (dict "logo" (. | fingerprint).Permalink) }}{{ end -}}
-{{- with $f.address -}}
-  {{- $org = merge $org (dict "address" (dict "@type" "PostalAddress" "streetAddress" .street "addressLocality" .city "addressRegion" .state "postalCode" .postalCode "addressCountry" (.country | default "BR"))) -}}
+{{- $amode := $f.address.display | default "full" -}}
+{{- if and $f.address (eq $amode "city") -}}
+  {{- $org = merge $org (dict "address" (dict "@type" "PostalAddress" "addressLocality" $f.address.city "addressRegion" $f.address.state "addressCountry" ($f.address.country | default "BR"))) -}}
+{{- else if and $f.address (eq $amode "full") -}}
+  {{- with $f.address }}{{ $org = merge $org (dict "address" (dict "@type" "PostalAddress" "streetAddress" .street "addressLocality" .city "addressRegion" .state "postalCode" .postalCode "addressCountry" (.country | default "BR"))) }}{{ end -}}
 {{- end -}}
 {{- with $f.social }}{{ $s := slice }}{{ range . }}{{ $s = $s | append .url }}{{ end }}{{ $org = merge $org (dict "sameAs" $s) }}{{ end -}}
 {{- $graph := slice $org -}}

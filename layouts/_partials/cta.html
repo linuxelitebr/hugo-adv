@@ -1,10 +1,6 @@
-{{- /* Sober contact call-to-action. Arg: page (optional .Params.cta overrides text). */ -}}
-{{- $contact := site.GetPage (printf "/%s" site.Params.sections.contact) -}}
+{{- /* Sober call to action with contact channels in priority order. .Params.cta overrides the text. */ -}}
 <aside class="cta" aria-labelledby="cta-title">
   <h2 id="cta-title">{{ T "ctaTitle" }}</h2>
   <p>{{ .Params.cta | default (T "ctaDefault") }}</p>
-  <div class="btn-group">
-    {{- with $contact }}<a class="btn btn-primary" href="{{ .RelPermalink }}">{{ T "contactUs" }}</a>{{ end }}
-    {{- with site.Params.firm.whatsapp }}<a class="btn btn-secondary" href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ partial "icon.html" "chat" }}{{ T "openWhatsapp" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>{{ end }}
-  </div>
+  {{- partial "contact-actions.html" (dict "variant" "default") }}
 </aside>

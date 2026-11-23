@@ -48,6 +48,7 @@ disableKinds = ["taxonomy", "term"]
     state = "UF"
     postalCode = "00000-000"
     mapUrl = "https://..."
+    display = "full"                     # "full" (padrão), "city" (só cidade/UF) ou "none"
 
 [params.brand]
   logo = "brand/logo-light.svg"          # em assets/ do site

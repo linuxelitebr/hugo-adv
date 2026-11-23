@@ -6,11 +6,9 @@
       {{ .Content }}
       {{- partial "contact-details.html" . }}
     </div>
-    {{- with site.Params.firm.whatsapp }}
-    <aside>
-      <a class="btn btn-primary" href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ partial "icon.html" "chat" }}{{ T "openWhatsapp" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>
+    <aside class="contact-aside" aria-label="{{ T "contactDetails" }}">
+      {{- partial "contact-actions.html" (dict "variant" "default") }}
     </aside>
-    {{- end }}
   </div>
 </div>
 {{- end }}

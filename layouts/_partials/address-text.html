@@ -1,0 +1,25 @@
+{{- /*
+  Returns the firm address as text according to params.firm.address.display:
+  "full" (default), "city" (city/state only) or "none". Arg: dict "short" bool.
+*/ -}}
+{{- $a := site.Params.firm.address -}}
+{{- $mode := "none" -}}
+{{- with $a }}{{ $mode = .display | default "full" }}{{ end -}}
+{{- $out := "" -}}
+{{- if ne $mode "none" -}}
+  {{- $cityParts := slice -}}
+  {{- with $a.city }}{{ $cityParts = $cityParts | append . }}{{ end -}}
+  {{- with $a.state }}{{ $cityParts = $cityParts | append . }}{{ end -}}
+  {{- $city := delimit $cityParts "/" -}}
+  {{- $parts := slice -}}
+  {{- if eq $mode "city" -}}
+    {{- with $city }}{{ $parts = $parts | append . }}{{ end -}}
+  {{- else -}}
+    {{- with $a.street }}{{ $parts = $parts | append . }}{{ end -}}
+    {{- if not $.short }}{{ with $a.district }}{{ $parts = $parts | append . }}{{ end }}{{ end -}}
+    {{- with $city }}{{ $parts = $parts | append . }}{{ end -}}
+    {{- if not $.short }}{{ with $a.postalCode }}{{ $parts = $parts | append (printf "CEP %s" .) }}{{ end }}{{ end -}}
+  {{- end -}}
+  {{- $out = delimit $parts ", " -}}
+{{- end -}}
+{{- return $out -}}

@@ -558,17 +558,58 @@ main {
   gap: var(--space-6);
 }
 .cta-band h2 {
-  margin: 0;
+  margin: 0 0 var(--space-2);
   font-size: var(--text-xl);
 }
-.cta-band .btn {
+.cta-band p {
+  margin: 0;
+  max-width: var(--measure);
+  opacity: 0.92;
+}
+.cta-band .contact-address {
+  color: var(--color-on-primary);
+}
+.cta-band .contact-address a {
+  color: var(--color-on-primary);
+}
+.btn-inverse {
   background: var(--color-on-primary);
   border-color: var(--color-on-primary);
   color: var(--color-primary);
 }
-.cta-band .btn:hover {
+.btn-inverse:hover {
   background: transparent;
   color: var(--color-on-primary);
+}
+.btn-inverse-outline {
+  background: transparent;
+  border-color: var(--color-on-primary);
+  color: var(--color-on-primary);
+}
+.btn-inverse-outline:hover {
+  background: var(--color-on-primary);
+  color: var(--color-primary);
+}
+.contact-address {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+.contact-address svg {
+  flex-shrink: 0;
+  width: 1.1em;
+  height: 1.1em;
+  margin-top: 0.2em;
+}
+.contact-aside .btn-group {
+  flex-direction: column;
+  align-items: stretch;
+}
+.contact-aside .btn {
+  justify-content: center;
 }
 
 /* ---------- Contact ---------- */
@@ -661,4 +702,71 @@ main {
   justify-content: space-between;
   gap: var(--space-4);
   margin-top: var(--space-12);
+}
+
+/* ---------- Motion (discreet, CSS only, off with reduced motion) ---------- */
+.btn,
+.card {
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .hero .container > *,
+  .page-header .container > * {
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero .container > :nth-child(2),
+  .page-header .container > :nth-child(2) {
+    animation-delay: 0.08s;
+  }
+  .hero .container > :nth-child(3),
+  .page-header .container > :nth-child(3) {
+    animation-delay: 0.16s;
+  }
+  .hero .container > :nth-child(4),
+  .page-header .container > :nth-child(4) {
+    animation-delay: 0.24s;
+  }
+  @supports (animation-timeline: view()) {
+    .section-head,
+    .grid > li,
+    .person-profile > *,
+    .cta {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    .site-header {
+      animation: header-shadow linear both;
+      animation-timeline: scroll();
+      animation-range: 0 120px;
+    }
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes header-shadow {
+  from {
+    box-shadow: none;
+  }
+  to {
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.07);
+  }
 }

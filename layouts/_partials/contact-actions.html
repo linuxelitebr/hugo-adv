@@ -1,0 +1,28 @@
+{{- /*
+  Ordered contact buttons: WhatsApp, phone, email, then address.
+  Args: dict "variant" ("default" | "band"). The first available channel is the primary button.
+*/ -}}
+{{- $f := site.Params.firm -}}
+{{- $band := eq .variant "band" -}}
+{{- $contact := site.GetPage (printf "/%s" site.Params.sections.contact) -}}
+{{- $primary := true -}}
+<div class="btn-group contact-actions">
+  {{- with $f.whatsapp }}
+  <a class="btn {{ if $band }}btn-inverse{{ else }}btn-primary{{ end }}" href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ partial "icon.html" "chat" }}{{ T "whatsapp" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>
+  {{- $primary = false }}
+  {{- end }}
+  {{- with $f.phone }}
+  <a class="btn {{ if $band }}btn-inverse-outline{{ else if $primary }}btn-primary{{ else }}btn-secondary{{ end }}" href="tel:{{ replaceRE `[^\d+]` "" . }}">{{ partial "icon.html" "phone" }}{{ T "callUs" }}</a>
+  {{- $primary = false }}
+  {{- end }}
+  {{- with $f.email }}
+  <a class="btn {{ if $band }}btn-inverse-outline{{ else if $primary }}btn-primary{{ else }}btn-secondary{{ end }}" href="mailto:{{ . }}">{{ partial "icon.html" "mail" }}{{ T "sendEmail" }}</a>
+  {{- $primary = false }}
+  {{- end }}
+  {{- if and $primary $contact }}
+  <a class="btn {{ if $band }}btn-inverse{{ else }}btn-primary{{ end }}" href="{{ $contact.RelPermalink }}">{{ T "contactUs" }}</a>
+  {{- end }}
+</div>
+{{- with partial "address-text.html" (dict "short" true) }}
+<p class="contact-address">{{ partial "icon.html" "pin" }}<span>{{ . }}{{ with $f.address.mapUrl }}{{ if eq ($f.address.display | default "full") "full" }} · <a href="{{ . }}" rel="noopener" target="_blank">{{ T "openMap" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>{{ end }}{{ end }}</span></p>
+{{- end }}

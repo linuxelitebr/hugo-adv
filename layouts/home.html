@@ -71,12 +71,13 @@
 </section>
 {{- end }}{{ end }}{{ end }}
 
-{{- with $contact }}
 <section class="section cta-band" aria-labelledby="home-cta">
   <div class="container">
-    <h2 id="home-cta">{{ T "ctaTitle" }}</h2>
-    <a class="btn" href="{{ .RelPermalink }}">{{ T "contactUs" }}</a>
+    <div>
+      <h2 id="home-cta">{{ T "ctaTitle" }}</h2>
+      <p>{{ .Params.ctaText | default (T "ctaDefault") }}</p>
+    </div>
+    {{- partial "contact-actions.html" (dict "variant" "band") }}
   </div>
 </section>
-{{- end }}
 {{- end }}

@@ -1,20 +1,14 @@
+{{- /* Contact channels in priority order: WhatsApp, phone, email, hours, address. */ -}}
 {{- $f := site.Params.firm -}}
 <dl class="contact-list">
-  {{- with $f.address }}
+  {{- with $f.whatsapp }}
   <div class="contact-item">
-    <dt>{{ partial "icon.html" "pin" }}{{ T "address" }}</dt>
-    <dd>{{ .street }}{{ with .district }}, {{ . }}{{ end }}<br>{{ .city }}{{ with .state }}/{{ . }}{{ end }}{{ with .postalCode }}, CEP {{ . }}{{ end }}
-      {{- with .mapUrl }}<br><a href="{{ . }}" rel="noopener" target="_blank">{{ T "openMap" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>{{ end }}</dd>
+    <dt>{{ partial "icon.html" "chat" }}{{ T "whatsapp" }}</dt><dd><a href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ $f.whatsappDisplay | default . }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a></dd>
   </div>
   {{- end }}
   {{- with $f.phone }}
   <div class="contact-item">
     <dt>{{ partial "icon.html" "phone" }}{{ T "phone" }}</dt><dd><a href="tel:{{ replaceRE `[^\d+]` "" . }}">{{ . }}</a></dd>
-  </div>
-  {{- end }}
-  {{- with $f.whatsapp }}
-  <div class="contact-item">
-    <dt>{{ partial "icon.html" "chat" }}{{ T "whatsapp" }}</dt><dd><a href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ $f.whatsappDisplay | default . }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a></dd>
   </div>
   {{- end }}
   {{- with $f.email }}
@@ -25,6 +19,12 @@
   {{- with $f.hours }}
   <div class="contact-item">
     <dt>{{ partial "icon.html" "clock" }}{{ T "hours" }}</dt><dd>{{ . }}</dd>
+  </div>
+  {{- end }}
+  {{- with partial "address-text.html" (dict "short" false) }}
+  <div class="contact-item">
+    <dt>{{ partial "icon.html" "pin" }}{{ T "address" }}</dt>
+    <dd>{{ . }}{{ with $f.address.mapUrl }}{{ if eq ($f.address.display | default "full") "full" }}<br><a href="{{ . }}" rel="noopener" target="_blank">{{ T "openMap" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>{{ end }}{{ end }}</dd>
   </div>
   {{- end }}
 </dl>
