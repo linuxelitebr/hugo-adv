@@ -2,13 +2,14 @@
 
 Tema Hugo para sites de escritórios de advocacia: leve, acessível (WCAG 2.2 AA), sem rastreadores de terceiros e totalmente parametrizável pelo `hugo.toml`.
 
-Baseado no [Justice Hugo Template](https://github.com/CloudCannon/justice-hugo-template), da CloudCannon (licença MIT).
+Escrito do zero. A direção visual inicial foi inspirada no [Justice Hugo Template](https://github.com/CloudCannon/justice-hugo-template), da CloudCannon, sem reaproveitamento de código.
 
 > Em desenvolvimento. Ainda não pronto para uso.
 
 ## Princípios
 
 - **Nenhum dado de cliente no tema.** Nome, logo, contatos, cores e textos ficam no repositório do site de cada escritório. O tema só traz um `exampleSite/` fictício.
+- **Sem dependências de build.** Somente Hugo extended: CSS moderno sem Sass, sem Node, sem CDN, JavaScript opcional.
 - **Privacidade por padrão.** Sem cookies de terceiros, sem scripts de rastreamento, compatível com a LGPD sem banner de consentimento.
 - **Conformidade com a publicidade da advocacia** (Código de Ética e Disciplina da OAB e Provimento 205/2021) nos componentes padrão.
 
