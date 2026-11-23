@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# Pipelines run in subshells, so every check reads from a temp file instead.
+. "$(git rev-parse --show-toplevel)/.githooks/guard.sh"
+if load_patterns; then
+  tmp=$(mktemp)
+  git diff --cached --name-only --diff-filter=ACMR > "$tmp"
+  check_stream "staged file names" < "$tmp"
+  git diff --cached --diff-filter=ACMR -U0 --no-color | grep '^+' | grep -v '^+++' > "$tmp"
+  check_stream "staged changes" < "$tmp"
+  rm -f "$tmp" "$PATTERNS"
+fi
+run_gitleaks git --pre-commit --staged

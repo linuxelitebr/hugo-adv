@@ -1,0 +1,10 @@
+public/
+resources/_gen/
+.hugo_build.lock
+exampleSite/public/
+exampleSite/resources/
+node_modules/
+.env
+.env.*
+.claude/settings.local.json
+.DS_Store

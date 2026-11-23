@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+# Scans the full tree and every commit message being pushed.
+# Pipelines run in subshells, so every check reads from a temp file instead.
+. "$(git rev-parse --show-toplevel)/.githooks/guard.sh"
+ZERO=0000000000000000000000000000000000000000
+refs=$(mktemp)
+cat > "$refs"
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "$ZERO" ] && continue
+  if [ "$remote_sha" = "$ZERO" ]; then range="$local_sha"; else range="$remote_sha..$local_sha"; fi
+  if load_patterns; then
+    tmp=$(mktemp)
+    git ls-tree -r --name-only "$local_sha" > "$tmp"
+    check_stream "file names at $local_ref" < "$tmp"
+    git grep -I -h -e '' "$local_sha" -- . > "$tmp" 2>/dev/null
+    check_stream "files at $local_ref" < "$tmp"
+    git log --format='%an %ae%n%B' "$range" > "$tmp"
+    check_stream "commits in $range" < "$tmp"
+    rm -f "$tmp" "$PATTERNS"
+  fi
+  run_gitleaks git --log-opts="$range"
+done < "$refs"
+rm -f "$refs"

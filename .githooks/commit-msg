@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(git rev-parse --show-toplevel)/.githooks/guard.sh"
+if load_patterns; then
+  check_stream "commit message" < "$1"
+  rm -f "$PATTERNS"
+fi
