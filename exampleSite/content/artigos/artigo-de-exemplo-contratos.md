@@ -4,6 +4,7 @@ description = "Um artigo fictício para demonstrar o layout de artigos do tema, 
 date = 2026-01-15
 practice = "empresarial"
 cta = "Se você está revisando um contrato, fale com o escritório antes de assinar."
+author = "maria-exemplo"
 legalReview = "aprovado"
 +++
 

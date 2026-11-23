@@ -1,0 +1,7 @@
+{{- $icons := slice -}}
+{{- range site.Params.brand.icons -}}
+  {{- with resources.Get .path -}}
+    {{- $icons = $icons | append (dict "src" (. | fingerprint).RelPermalink "sizes" (printf "%dx%d" .Width .Height) "type" "image/png") -}}
+  {{- end -}}
+{{- end -}}
+{{- dict "name" site.Params.firm.name "short_name" (site.Params.firm.shortName | default site.Params.firm.name) "start_url" "/" "display" "browser" "lang" (site.Language.Locale | default "pt-BR") "theme_color" (site.Params.brand.colors.primary | default "#000000") "background_color" (site.Params.brand.colors.background | default "#FFFFFF") "icons" $icons | jsonify (dict "indent" "  ") -}}

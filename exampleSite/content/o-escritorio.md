@@ -1,6 +1,7 @@
 +++
 title = "O escritório"
 description = "Conheça a história e a forma de trabalho do escritório."
+schemaType = "AboutPage"
 +++
 
 Texto institucional de exemplo. Descreva a trajetória do escritório, os valores e a forma de atendimento, sem promessa de resultado.

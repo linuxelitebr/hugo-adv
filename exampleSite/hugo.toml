@@ -45,6 +45,13 @@ enableRobotsTXT = true
     whatsapp = "5511900000000"
     whatsappDisplay = "(11) 90000-0000"
     hours = "Segunda a sexta, das 9h às 18h"
+    foundingDate = "2020-01-15"
+    founder = "maria-exemplo"            # slug of the founder's page in the people section
+    areaServed = ["São Paulo"]
+    [[params.firm.openingHours]]
+      days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+      opens = "09:00"
+      closes = "18:00"
     [params.firm.address]
       street = "Rua Exemplo, 100, sala 1"
       district = "Centro"
@@ -61,3 +68,11 @@ enableRobotsTXT = true
     logo = "brand/logo.svg"
     logoDark = "brand/logo-dark.svg"
     favicon = "brand/favicon.svg"
+    ogImage = "brand/og-image.png"
+    appleTouchIcon = "brand/icon-180.png"
+    [[params.brand.icons]]
+      path = "brand/icon-48.png"
+    [[params.brand.icons]]
+      path = "brand/icon-192.png"
+    [[params.brand.icons]]
+      path = "brand/icon-512.png"

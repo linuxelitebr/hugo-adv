@@ -86,6 +86,7 @@ console.log(`pages: ${urls.length}`);
 const viewports = { desktop: { width: 1280, height: 900 }, mobile: { width: 375, height: 812 } };
 const browser = await chromium.launch();
 const linksSeen = new Set();
+const seoSeen = { title: {}, desc: {} };
 for (const [vpName, viewport] of Object.entries(viewports)) {
   // Reduced motion: axe must evaluate the final visual state, not frames of entrance animations.
   const ctx = await browser.newContext({ viewport, colorScheme: "light", reducedMotion: "reduce" });
@@ -111,6 +112,38 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
     if (overflow > 0) fail(`${vpName} ${u}: horizontal overflow of ${overflow}px`);
     const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]).analyze();
     for (const v of axe.violations) fail(`${vpName} ${u}: axe ${v.id} (${v.impact}): ${v.nodes.length} node(s), e.g. ${v.nodes[0]?.target.join(" ")}`);
+    // SEO and metadata (once per page, desktop pass).
+    if (vpName === "desktop" && expected === 200) {
+      const seo = await page.evaluate(() => {
+        const meta = (sel) => document.querySelector(sel)?.getAttribute("content") ?? "";
+        const ld = [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent);
+        return {
+          title: document.title,
+          desc: meta('meta[name="description"]'),
+          canonical: document.querySelector('link[rel="canonical"]')?.href ?? "",
+          ogImage: meta('meta[property="og:image"]'),
+          h1: document.querySelectorAll("h1").length,
+          ld,
+        };
+      });
+      if (!seo.title || [...seo.title].length > 65) fail(`seo ${u}: title length ${[...seo.title].length} (max 65): ${seo.title}`);
+      if ([...seo.desc].length < 50 || [...seo.desc].length > 170) fail(`seo ${u}: description length ${[...seo.desc].length} (50 to 170)`);
+      if (!seo.canonical) fail(`seo ${u}: missing canonical`);
+      if (seo.h1 !== 1) fail(`seo ${u}: ${seo.h1} h1 elements`);
+      if (!seo.ogImage) fail(`seo ${u}: missing og:image`);
+      else {
+        const r = await fetch(base + new URL(seo.ogImage).pathname);
+        if (r.status !== 200) fail(`seo ${u}: og:image returns ${r.status}`);
+      }
+      try {
+        const types = seo.ld.flatMap((t) => JSON.parse(t)["@graph"] ?? []).map((n) => n["@type"]);
+        if (!types.some((t) => /Page$/.test(t))) fail(`seo ${u}: JSON-LD without a WebPage node`);
+      } catch (e) {
+        fail(`seo ${u}: invalid JSON-LD (${e.message})`);
+      }
+      seoSeen.title[seo.title] = [...(seoSeen.title[seo.title] ?? []), u];
+      seoSeen.desc[seo.desc] = [...(seoSeen.desc[seo.desc] ?? []), u];
+    }
     if (vpName === "desktop") for (const href of await page.$$eval("a[href^='/']", (as) => as.map((a) => a.getAttribute("href")))) linksSeen.add(href.split("#")[0]);
     if (shots) {
       fs.mkdirSync(shots, { recursive: true });
@@ -128,6 +161,15 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
   if (shots) await dp.screenshot({ path: path.join(shots, `${vpName}_dark_home.png`), fullPage: true });
   await dark.close();
   await ctx.close();
+}
+
+// ---------- Site-wide SEO ----------
+for (const [kind, map] of Object.entries(seoSeen)) for (const [v, us] of Object.entries(map)) if (us.length > 1) fail(`seo: duplicate ${kind} on ${us.join(", ")}: ${v}`);
+const robots = fs.readFileSync(path.join(out, "robots.txt"), "utf8");
+if (!/Disallow: \//.test(robots)) fail("seo: non-production robots.txt must disallow crawling");
+const manifestFile = files.find((f) => f.endsWith("site.webmanifest"));
+if (manifestFile) {
+  try { JSON.parse(fs.readFileSync(manifestFile, "utf8")); } catch { fail("seo: site.webmanifest is not valid JSON"); }
 }
 
 // ---------- Internal links ----------

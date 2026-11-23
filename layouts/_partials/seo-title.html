@@ -1,0 +1,15 @@
+{{- /*
+  Returns the <title> text. Order: .Params.seoTitle, home "Name | tagline",
+  "Title | Name" when it fits in ~60 characters (Google truncates longer titles), else "Title".
+*/ -}}
+{{- $name := site.Params.firm.name -}}
+{{- $t := "" -}}
+{{- if .Params.seoTitle -}}
+  {{- $t = .Params.seoTitle -}}
+{{- else if .IsHome -}}
+  {{- $t = printf "%s | %s" $name (site.Params.firm.tagline | default (T "practiceAreas")) -}}
+{{- else -}}
+  {{- $full := printf "%s | %s" .Title $name -}}
+  {{- $t = cond (le (strings.RuneCount $full) 60) $full .Title -}}
+{{- end -}}
+{{- return $t -}}

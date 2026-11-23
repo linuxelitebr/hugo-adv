@@ -2,14 +2,17 @@
 {{- $brand := site.Params.brand -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{{- $title := cond .IsHome (printf "%s | %s" $firm.name ($firm.tagline | default (T "practiceAreas"))) (printf "%s | %s" .Title $firm.name) }}
-<title>{{ $title }}</title>
+<title>{{ partial "seo-title.html" . }}</title>
 {{- $desc := .Description | default (.Summary | plainify | strings.TrimSpace) | default site.Params.description }}
 <meta name="description" content="{{ $desc | truncate 160 }}">
 <link rel="canonical" href="{{ .Permalink }}">
-{{- if not hugo.IsProduction }}
+{{- if hugo.IsProduction }}
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+{{- else }}
 <meta name="robots" content="noindex, nofollow">
 {{- end }}
+{{- $author := partial "author.html" . }}
+<meta name="author" content="{{ with $author }}{{ .Title }}{{ else }}{{ $firm.name }}{{ end }}">
 {{- $light := site.Params.brand.colors -}}
 <meta name="theme-color" content="{{ $light.background | default "#FFFFFF" }}">
 
@@ -26,24 +29,52 @@
   {{- end }}
 {{- end }}
 
+{{- /* Icons: SVG favicon, PNG fallbacks (Google results prefer multiples of 48px), Apple touch icon, manifest. */}}
 {{- with $brand.favicon }}{{ with resources.Get . }}
 <link rel="icon" href="{{ (. | fingerprint).RelPermalink }}" type="image/svg+xml">
 {{- end }}{{ end }}
-{{- with $brand.appleTouchIcon }}{{ with resources.Get . }}
-<link rel="apple-touch-icon" href="{{ (. | fingerprint).RelPermalink }}">
+{{- range $brand.icons }}{{ with resources.Get .path }}
+<link rel="icon" href="{{ (. | fingerprint).RelPermalink }}" type="image/png" sizes="{{ .Width }}x{{ .Height }}">
 {{- end }}{{ end }}
+{{- with $brand.appleTouchIcon }}{{ with resources.Get . }}
+<link rel="apple-touch-icon" href="{{ (. | fingerprint).RelPermalink }}" sizes="{{ .Width }}x{{ .Height }}">
+{{- end }}{{ end }}
+{{- with $brand.icons }}
+  {{- with resources.Get "manifest.tmpl" | resources.ExecuteAsTemplate "site.webmanifest" $ }}
+<link rel="manifest" href="{{ .RelPermalink }}">
+  {{- end }}
+{{- end }}
 
-{{- /* Open Graph */}}
-<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+{{- /* Open Graph and Twitter/X cards */}}
+{{- $ogTitle := cond .IsHome $firm.name .Title }}
+<meta property="og:type" content="{{ cond (and .IsPage (eq .Type "articles")) "article" (cond (and .IsPage (eq .Type "people")) "profile" "website") }}">
 <meta property="og:site_name" content="{{ $firm.name }}">
-<meta property="og:title" content="{{ cond .IsHome $firm.name .Title }}">
+<meta property="og:title" content="{{ $ogTitle }}">
 <meta property="og:description" content="{{ $desc | truncate 200 }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:locale" content="{{ replace (site.Language.Locale | default "pt-BR") "-" "_" }}">
-{{- with $brand.ogImage }}{{ with resources.Get . }}
-<meta property="og:image" content="{{ (. | fingerprint).Permalink }}">
 <meta name="twitter:card" content="summary_large_image">
-{{- end }}{{ end }}
+<meta name="twitter:title" content="{{ $ogTitle }}">
+<meta name="twitter:description" content="{{ $desc | truncate 200 }}">
+{{- with partial "seo-image.html" . }}
+<meta property="og:image" content="{{ .Permalink }}">
+<meta property="og:image:type" content="{{ .MediaType.Type }}">
+<meta property="og:image:width" content="{{ .Width }}">
+<meta property="og:image:height" content="{{ .Height }}">
+<meta property="og:image:alt" content="{{ $ogTitle }}">
+<meta name="twitter:image" content="{{ .Permalink }}">
+<meta name="twitter:image:alt" content="{{ $ogTitle }}">
+{{- end }}
+{{- if and .IsPage (eq .Type "articles") }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- with site.GetPage (printf "/%s/%s" site.Params.sections.practice (.Params.practice | default "")) }}
+<meta property="article:section" content="{{ .Title }}">
+{{- end }}
+{{- with $author }}
+<meta property="article:author" content="{{ .Permalink }}">
+{{- end }}
+{{- end }}
 
 {{- with .OutputFormats.Get "rss" }}
 <link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ $firm.name }}">

@@ -1,0 +1,16 @@
+{{- /*
+  Returns a 1200x630 sharing image (resource) for the page, or nil.
+  Order: .Params.image (bundle or assets), person photo on people pages, params.brand.ogImage.
+*/ -}}
+{{- $img := false -}}
+{{- with .Params.image }}{{ $img = or ($.Resources.Get .) (resources.Get .) }}{{ end -}}
+{{- if and (not $img) .IsPage (eq .Type "people") -}}
+  {{- $img = or (.Resources.GetMatch "photo.*") (resources.Get (.Params.photo | default "")) -}}
+{{- end -}}
+{{- if and $img (ne $img.MediaType.SubType "svg") -}}
+  {{- $img = $img.Fill "1200x630 jpg q82 Smart" -}}
+{{- else -}}
+  {{- $img = false -}}
+  {{- with site.Params.brand.ogImage }}{{ with resources.Get . }}{{ $img = . | fingerprint }}{{ end }}{{ end -}}
+{{- end -}}
+{{- return $img -}}

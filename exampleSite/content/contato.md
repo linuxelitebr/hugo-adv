@@ -1,6 +1,6 @@
 +++
 title = "Contato"
-description = "Canais de atendimento do escritório."
+description = "Telefone, WhatsApp, e-mail e endereço do escritório. Atendimento presencial com hora marcada."
 type = "contact"
 +++
 

@@ -1,0 +1,4 @@
+{{- /* Returns the author page (people section) referenced by .Params.author, or nil. */ -}}
+{{- $p := false -}}
+{{- with .Params.author }}{{ $p = site.GetPage (printf "/%s/%s" site.Params.sections.people .) }}{{ end -}}
+{{- return $p -}}

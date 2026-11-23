@@ -73,6 +73,31 @@ disableKinds = ["taxonomy", "term"]
       preload = true
 ```
 
+### SEO e dados estruturados
+
+```toml
+[params.firm]
+  shortName = "Nome curto"               # manifest
+  foundingDate = "AAAA-MM-DD"
+  founder = "slug-do-fundador"           # página na seção de equipe
+  areaServed = ["Cidade"]
+  [[params.firm.openingHours]]
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    opens = "09:00"
+    closes = "18:00"
+  [params.firm.address.geo]              # opcional
+    latitude = 0.0
+    longitude = 0.0
+
+[params.brand]
+  ogImage = "brand/og-image.png"         # 1200x630, imagem padrão de compartilhamento
+  appleTouchIcon = "brand/icon-180.png"
+  [[params.brand.icons]]                 # PNG (ex.: 48, 192, 512); gera também o site.webmanifest
+    path = "brand/icon-48.png"
+```
+
+No cabeçalho de cada página: `seoTitle` (título para busca, quando o título visível for longo), `image` (imagem de compartilhamento própria), `schemaType` (ex.: `AboutPage`) e, nos artigos, `author` (slug da pessoa na seção de equipe, exibido como "Por" com link). O tema gera Open Graph, cartões do X/Twitter, `robots.txt` (bloqueado fora de produção), sitemap e um grafo Schema.org com LegalService, WebSite, WebPage, BreadcrumbList, Article e Person.
+
 Seções de conteúdo (nomes configuráveis em `params.sections`): `areas-de-atuacao/` (`type = "practice"`), `equipe/` (`type = "people"`), `artigos/` (`type = "articles"`), `contato.md` (`type = "contact"`) e `privacidade.md`. Veja o `exampleSite/`.
 
 ### Proteções de build

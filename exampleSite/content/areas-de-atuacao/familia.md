@@ -1,6 +1,6 @@
 +++
 title = "Direito de Família"
-description = "Divórcio, guarda, alimentos e partilha de bens."
+description = "Divórcio, guarda, convivência, alimentos e partilha de bens, com atenção ao diálogo e à solução consensual."
 weight = 30
 +++
 

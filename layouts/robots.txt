@@ -1,0 +1,10 @@
+{{- if hugo.IsProduction -}}
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{- else -}}
+# Non-production build: keep out of search engines.
+User-agent: *
+Disallow: /
+{{- end }}
