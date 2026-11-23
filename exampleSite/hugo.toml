@@ -11,6 +11,10 @@ enableRobotsTXT = true
   pagerSize = 12
 
 [[menus.main]]
+  name = "Início"
+  pageRef = "/"
+  weight = 5
+[[menus.main]]
   name = "O escritório"
   pageRef = "/o-escritorio"
   weight = 10

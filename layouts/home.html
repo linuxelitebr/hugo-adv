@@ -12,7 +12,12 @@
     <h1>{{ .Params.hero.title | default .Title }}</h1>
     {{- with .Params.hero.lead }}<p class="lead">{{ . }}</p>{{ end }}
     <div class="btn-group">
-      {{- with $contact }}<a class="btn btn-primary" href="{{ .RelPermalink }}">{{ T "contactUs" }}</a>{{ end }}
+      {{- /* WhatsApp is the preferred first contact when available; otherwise the contact page. */}}
+      {{- with site.Params.firm.whatsapp }}
+      <a class="btn btn-primary" href="https://wa.me/{{ . }}" rel="noopener" target="_blank">{{ partial "icon.html" "chat" }}{{ T "openWhatsapp" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>
+      {{- else }}{{ with $contact }}
+      <a class="btn btn-primary" href="{{ .RelPermalink }}">{{ T "contactUs" }}</a>
+      {{- end }}{{ end }}
       {{- with $practice }}<a class="btn btn-secondary" href="{{ .RelPermalink }}">{{ T "practiceAreas" }}</a>{{ end }}
     </div>
   </div>
