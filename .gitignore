@@ -10,3 +10,7 @@ node_modules/
 .DS_Store
 tests/node_modules/
 tests/screenshots/
+
+# Windows alternate data streams copied into WSL (DLP marks, download zone)
+*:sec.endpointdlp
+*:Zone.Identifier

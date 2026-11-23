@@ -48,6 +48,7 @@ enableRobotsTXT = true
       state = "SP"
       postalCode = "00000-000"
       mapUrl = "https://www.openstreetmap.org/"
+      note = "Atendimento presencial com hora marcada"
     [[params.firm.social]]
       name = "LinkedIn"
       url = "https://www.linkedin.com/"

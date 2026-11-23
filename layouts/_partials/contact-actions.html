@@ -24,5 +24,5 @@
   {{- end }}
 </div>
 {{- with partial "address-text.html" (dict "short" true) }}
-<p class="contact-address">{{ partial "icon.html" "pin" }}<span>{{ . }}{{ with $f.address.mapUrl }}{{ if eq ($f.address.display | default "full") "full" }} · <a href="{{ . }}" rel="noopener" target="_blank">{{ T "openMap" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>{{ end }}{{ end }}</span></p>
+<p class="contact-address">{{ partial "icon.html" "pin" }}<span>{{ . }}{{ with $f.address.mapUrl }}{{ if eq ($f.address.display | default "full") "full" }} · <a href="{{ . }}" rel="noopener" target="_blank">{{ T "openMap" }}<span class="visually-hidden"> ({{ T "opensInNewTab" }})</span></a>{{ end }}{{ end }}{{ with $f.address.note }}<br>{{ . }}{{ end }}</span></p>
 {{- end }}
