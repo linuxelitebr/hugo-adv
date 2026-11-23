@@ -91,6 +91,8 @@ cd tests && pnpm install && pnpm test   # build, axe (WCAG 2.2 AA), CSP, links, 
 
 ## Contribuindo
 
+Contribuições externas dependem de um termo de cessão de direitos (CLA), para preservar o licenciamento comercial. Abra uma issue antes de enviar código.
+
 Ative os hooks de proteção depois de clonar:
 
 ```sh
@@ -101,4 +103,8 @@ Eles rodam o [gitleaks](https://github.com/gitleaks/gitleaks) e, para mantenedor
 
 ## Licença
 
-MIT. Veja [LICENSE](LICENSE).
+[PolyForm Noncommercial 1.0.0](LICENSE.md). O código é visível e pode ser estudado e usado para fins não comerciais.
+
+**Uso comercial**, incluindo o site de qualquer escritório de advocacia ou empresa, exige licença comercial do autor. Entre em contato pelo perfil [linuxelitebr](https://github.com/linuxelitebr).
+
+Versões anteriores a esta mudança de licença foram publicadas sob MIT.
