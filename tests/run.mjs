@@ -79,7 +79,26 @@ const base = `http://127.0.0.1:${server.address().port}`;
 
 // ---------- Pages from sitemap ----------
 const sitemap = fs.readFileSync(path.join(out, "sitemap.xml"), "utf8");
-const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+const entries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
+const locs = entries.map((e) => e.match(/<loc>([^<]+)<\/loc>/)?.[1] ?? "");
+const urls = locs.map((l) => new URL(l).pathname);
+// Sitemap integrity: absolute unique URLs on baseURL, lastmod everywhere, every published page listed,
+// no redirect or error pages listed.
+const siteBase = new URL(locs[0] ?? "http://x/").origin;
+if (new Set(locs).size !== locs.length) fail("sitemap: duplicate URLs");
+entries.forEach((e, i) => {
+  if (!locs[i].startsWith(siteBase)) fail(`sitemap: URL outside ${siteBase}: ${locs[i]}`);
+  if (!/<lastmod>/.test(e)) fail(`sitemap: missing lastmod for ${locs[i]}`);
+});
+for (const f of files.filter((f) => f.endsWith(`${path.sep}index.html`))) {
+  const rel = f.slice(out.length).replace(/index\.html$/, "").split(path.sep).join("/");
+  const isRedirect = /http-equiv="?refresh/i.test(fs.readFileSync(f, "utf8").split("</head>")[0]);
+  if (isRedirect) {
+    if (urls.includes(rel)) fail(`sitemap: redirect page listed: ${rel}`);
+    fail(`site: meta-refresh redirect page generated: ${rel} (use pagination.disableAliases or _redirects)`);
+  } else if (!urls.includes(rel)) fail(`sitemap: published page missing: ${rel}`);
+}
+if (urls.some((u) => u.includes("404"))) fail("sitemap: 404 page listed");
 urls.push("/pagina-que-nao-existe/");
 console.log(`pages: ${urls.length}`);
 
@@ -98,6 +117,10 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
     const resp = await page.goto(base + u, { waitUntil: "networkidle" });
     const expected = u === "/pagina-que-nao-existe/" ? 404 : 200;
     if (resp.status() !== expected) fail(`${vpName} ${u}: status ${resp.status()}`);
+    if (expected === 200) {
+      const canon = await page.$eval('link[rel="canonical"]', (l) => l.getAttribute("href")).catch(() => "");
+      if (canon !== siteBase + u) fail(`sitemap: canonical ${canon} differs from sitemap URL ${siteBase + u}`);
+    }
     for (const e of errors) if (!(expected === 404 && /status of 404/.test(e))) fail(`${vpName} ${u}: console error: ${e}`);
     // Every article page must use the article layout: JSON-LD Article and the call to action.
     if (articleRe.test(u)) {

@@ -73,6 +73,23 @@ disableKinds = ["taxonomy", "term"]
       preload = true
 ```
 
+### Sitemap
+
+Recomendado no `hugo.toml` do site, para que todas as páginas tenham `lastmod` e não haja páginas de redirecionamento da paginação:
+
+```toml
+enableRobotsTXT = true
+enableGitInfo = true          # no CI, use clone completo (sem --depth 1)
+
+[frontmatter]
+  lastmod = [":git", "lastmod", "date", ":fileModTime"]
+
+[pagination]
+  disableAliases = true
+```
+
+A suíte de testes verifica o sitemap: URLs absolutas e únicas, `lastmod` em todas, canônica igual à URL listada, nenhuma página publicada fora dele e nenhuma página de redirecionamento ou 404.
+
 ### SEO e dados estruturados
 
 ```toml

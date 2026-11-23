@@ -6,9 +6,18 @@ theme = "hugo-adv"
 themesDir = "../.."
 disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
+# Sitemap lastmod from git history (requires a full clone in CI builds).
+enableGitInfo = true
+
+# lastmod source order: git commit, explicit front matter, publish date, file time.
+# Guarantees every sitemap entry has a lastmod.
+[frontmatter]
+  lastmod = [":git", "lastmod", "date", ":fileModTime"]
 
 [pagination]
   pagerSize = 12
+  # No /page/1/ redirect pages (the section URL is the first page).
+  disableAliases = true
 
 [[menus.main]]
   name = "Início"
