@@ -49,13 +49,17 @@ if (!fs.existsSync(hf)) fail("_headers not generated");
 else {
   let cur = null;
   for (const line of fs.readFileSync(hf, "utf8").split("\n")) {
-    if (!line.trim()) continue;
+    if (!line.trim() || line.trim().startsWith("#")) continue;
     if (!/^\s/.test(line)) {
       cur = { pattern: line.trim(), headers: {} };
       headerRules.push(cur);
     } else if (cur) {
-      const i = line.indexOf(":");
-      cur.headers[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+      const l = line.trim();
+      if (l.startsWith("#")) continue;
+      // "! Name" detaches a header set by another rule (Cloudflare _headers syntax).
+      if (l.startsWith("!")) { (cur.detach ??= []).push(l.slice(1).trim().toLowerCase()); continue; }
+      const i = l.indexOf(":");
+      cur.headers[l.slice(0, i).trim()] = l.slice(i + 1).trim();
     }
   }
 }
@@ -70,7 +74,11 @@ const server = http.createServer((req, res) => {
   if (status === 404) file = path.join(out, "404.html");
   const h = { "Content-Type": types[path.extname(file)] ?? "application/octet-stream" };
   // upgrade-insecure-requests would break plain-http local testing; drop only that directive.
-  for (const r of headerRules) if (matches(r.pattern, url)) Object.assign(h, r.headers);
+  for (const r of headerRules) {
+    if (!matches(r.pattern, url)) continue;
+    for (const d of r.detach ?? []) for (const k of Object.keys(h)) if (k.toLowerCase() === d) delete h[k];
+    Object.assign(h, r.headers);
+  }
   if (h["Content-Security-Policy"]) h["Content-Security-Policy"] = h["Content-Security-Policy"].replace(/;\s*upgrade-insecure-requests/, "");
   res.writeHead(status, h).end(fs.readFileSync(file));
 });
