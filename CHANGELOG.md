@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões seguem [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.1.2] - 2026-11-24
+
+### Alterado
+- Grades de três colunas centralizam a última linha incompleta (por exemplo, 7 áreas de atuação), em vez de deixar os cards presos à esquerda.
+
 ## [0.1.1] - 2026-11-24
 
 ### Corrigido
