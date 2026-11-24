@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões seguem [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.1.1] - 2026-11-24
+
+### Corrigido
+- Áreas de toque de pelo menos 24 px no celular (WCAG 2.5.8) para links fora do texto corrido: rodapé, canais de contato, "Ver no mapa", autor do artigo e nome no card de pessoa.
+
+### Testes
+- Verificação do tamanho das áreas de toque na tela de celular, sem depender da exceção de espaçamento.
+
 ## [0.1.0] - 2026-11-23
 
 Primeira versão.

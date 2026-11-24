@@ -399,6 +399,18 @@ main {
   font-size: var(--text-sm);
 }
 
+/* ---------- Touch targets ----------
+   Standalone links (outside running text) get at least 24px of height on touch screens
+   (WCAG 2.5.8) instead of the 16px of a bare inline link. */
+.footer-grid a,
+.contact-item dd a,
+.contact-address a,
+.page-meta a,
+.person-card .card-title a {
+  display: inline-block;
+  padding-block: 0.25rem;
+}
+
 /* ---------- Grids and cards ---------- */
 .grid {
   display: grid;

@@ -141,6 +141,19 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
     if (raw) fail(`${vpName} ${u}: raw Markdown visible in page text (${JSON.stringify(raw)})`);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     if (overflow > 0) fail(`${vpName} ${u}: horizontal overflow of ${overflow}px`);
+    // Touch targets on mobile: at least 24px tall (WCAG 2.5.8) without relying on the spacing
+    // exception. Links inside running text are exempt (WCAG "inline" exception), and so are card
+    // heading links, whose ::after stretches the target over the whole card.
+    if (vpName === "mobile") {
+      const small = await page.evaluate(() =>
+        [...document.querySelectorAll("a[href], button, summary, input:not([type=hidden]), select, textarea")]
+          .filter((el) => !el.closest(".prose p, .prose li, .prose td") && !el.matches(".card .card-title a") && el.checkVisibility())
+          .map((el) => ({ el, r: el.getBoundingClientRect() }))
+          .filter(({ r }) => r.width > 1 && r.height > 1 && (r.height < 24 || r.width < 24))
+          .map(({ el, r }) => `${el.parentElement?.closest("[class]")?.className ?? ""} > ${el.tagName.toLowerCase()}${el.className ? "." + [...el.classList].join(".") : ""} "${el.textContent.trim().slice(0, 30)}" ${Math.round(r.width)}x${Math.round(r.height)}`),
+      );
+      for (const s of small) fail(`${vpName} ${u}: touch target under 24px: ${s}`);
+    }
     const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]).analyze();
     for (const v of axe.violations) fail(`${vpName} ${u}: axe ${v.id} (${v.impact}): ${v.nodes.length} node(s), e.g. ${v.nodes[0]?.target.join(" ")}`);
     // SEO and metadata (once per page, desktop pass).
