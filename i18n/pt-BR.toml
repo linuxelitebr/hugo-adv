@@ -45,3 +45,12 @@ callUs = "Ligar"
 sendEmail = "Enviar e-mail"
 updatedOn = "Atualizado em"
 by = "Por"
+
+# Plural forms (tables must come after all plain keys).
+[morePracticeAreas]
+one = "E mais {{ .Count }} área:"
+other = "E mais {{ .Count }} áreas:"
+
+[seeAllPracticeAreasCount]
+one = "Ver a área de atuação"
+other = "Ver todas as {{ .Count }} áreas"

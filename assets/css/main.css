@@ -406,6 +406,7 @@ main {
 .contact-item dd a,
 .contact-address a,
 .page-meta a,
+.section-more a:not(.link-arrow),
 .person-card .card-title a {
   display: inline-block;
   padding-block: 0.25rem;
@@ -420,36 +421,23 @@ main {
   list-style: none;
 }
 @media (min-width: 40rem) {
-  .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-/* grid-3 runs on a doubled track count so an incomplete last row can be centered
-   instead of leaving cards stuck to the left. */
-@media (min-width: 40rem) and (max-width: 59.99rem) {
+  .grid-2,
   .grid-3 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .grid-3 > * {
-    grid-column: span 2;
-  }
-  .grid-3 > :last-child:nth-child(2n + 1) {
-    grid-column: 2 / span 2;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (min-width: 60rem) {
   .grid-3 {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
-  .grid-3 > * {
-    grid-column: span 2;
-  }
-  .grid-3 > :last-child:nth-child(3n + 1) {
-    grid-column: 3 / span 2;
-  }
-  .grid-3 > :nth-last-child(2):nth-child(3n + 1) {
-    grid-column: 2 / span 2;
-  }
+}
+.section-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-4);
+  margin: var(--space-6) 0 0;
+  color: var(--color-muted);
 }
 .card {
   position: relative;

@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões seguem [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.1.3] - 2026-11-24
+
+### Alterado
+- Volta o alinhamento à esquerda da última linha das grades, acompanhando o texto das páginas (desfaz a centralização da 0.1.2).
+
+### Adicionado
+- Na home, quando há mais áreas de atuação do que o limite (`params.home.practiceLimit`), as que ficaram de fora são citadas abaixo dos cards, com link para a página de todas as áreas.
+
 ## [0.1.2] - 2026-11-24
 
 ### Alterado

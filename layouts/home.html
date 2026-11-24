@@ -33,6 +33,10 @@
     <ul class="grid grid-3">
       {{- range first $h.practiceLimit .ByWeight }}<li>{{ partial "card.html" (dict "page" . "level" 3) }}</li>{{ end }}
     </ul>
+    {{- /* Areas beyond the limit are named below the grid, so visitors know there is more. */}}
+    {{- with after $h.practiceLimit .ByWeight }}
+    <p class="section-more"><span>{{ T "morePracticeAreas" (len .) }} {{ range $i, $p := . }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.LinkTitle }}</a>{{ end }}.</span> <a class="link-arrow" href="{{ $practice.RelPermalink }}">{{ T "seeAllPracticeAreasCount" (len $practice.Pages) }}{{ partial "icon.html" "arrow" }}</a></p>
+    {{- end }}
   </div>
 </section>
 {{- end }}{{ end }}

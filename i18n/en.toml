@@ -45,3 +45,12 @@ callUs = "Call"
 sendEmail = "Send email"
 updatedOn = "Updated on"
 by = "By"
+
+# Plural forms (tables must come after all plain keys).
+[morePracticeAreas]
+one = "And {{ .Count }} more area:"
+other = "And {{ .Count }} more areas:"
+
+[seeAllPracticeAreasCount]
+one = "See the practice area"
+other = "See all {{ .Count }} areas"
