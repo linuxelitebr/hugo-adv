@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões seguem [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.1.4] - 2026-11-24
+
+### Corrigido
+- Nos artigos, o nome do autor voltou a ficar na mesma linha de texto das datas e do tempo de leitura (desalinhado desde a 0.1.1 pela área de toque maior).
+
+### Testes
+- Verificação de que os itens de autor, datas e tempo de leitura dividem a mesma linha de base.
+
 ## [0.1.3] - 2026-11-24
 
 ### Alterado

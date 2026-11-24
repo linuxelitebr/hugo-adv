@@ -135,6 +135,11 @@ for (const [vpName, viewport] of Object.entries(viewports)) {
       const ld = await page.evaluate(() => [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent).join(""));
       if (!ld.includes('"@type":"Article"')) fail(`${vpName} ${u}: article without Article structured data (section type missing?)`);
       if (!(await page.$("aside.cta"))) fail(`${vpName} ${u}: article without call to action`);
+      // Meta items on the same row (author, dates, reading time) must share the text baseline.
+      const bottoms = await page.$$eval(".page-meta > *", (els) =>
+        els.map((e) => { const r = document.createRange(); r.selectNodeContents(e); const rs = [...r.getClientRects()]; return { top: e.getBoundingClientRect().top, bottom: rs.at(-1)?.bottom ?? 0 }; }));
+      const row = bottoms.filter((x) => Math.abs(x.top - bottoms[0]?.top) < 12);
+      if (row.length > 1 && Math.max(...row.map((x) => x.bottom)) - Math.min(...row.map((x) => x.bottom)) > 1) fail(`${vpName} ${u}: page meta items not on the same text line ${JSON.stringify(row)}`);
     }
     // Raw Markdown leaking into the rendered text means broken source content.
     const raw = await page.evaluate(() => document.querySelector("main")?.innerText.match(/(^|\s)#{2,6} \S|\\n|\bn{2}#{2}/)?.[0]);
