@@ -108,6 +108,7 @@ A suíte de testes verifica o sitemap: URLs absolutas e únicas, `lastmod` em to
 
 [params.brand]
   ogImage = "brand/og-image.png"         # 1200x630, imagem padrão de compartilhamento
+  ogLogo = "brand/icon-512.png"          # opcional; padrão: maior ícone PNG (og:logo, fora do padrão OG)
   appleTouchIcon = "brand/icon-180.png"
   [[params.brand.icons]]                 # PNG (ex.: 48, 192, 512); gera também o site.webmanifest
     path = "brand/icon-48.png"
