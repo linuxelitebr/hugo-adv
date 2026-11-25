@@ -8,6 +8,13 @@
   {{- $img = or (.Resources.GetMatch "photo.*") (resources.Get (.Params.photo | default "")) -}}
 {{- end -}}
 {{- if and $img (ne $img.MediaType.SubType "svg") -}}
+  {{- /* Fill with Smart crops a region no larger than the source; on a source narrower or
+         shorter than 1200x630 that region is then stretched. Scale up proportionally first so
+         the source always covers the target. */ -}}
+  {{- if or (lt $img.Width 1200) (lt $img.Height 630) -}}
+    {{- $scale := math.Max (div 1200.0 $img.Width) (div 630.0 $img.Height) -}}
+    {{- $img = $img.Resize (printf "%dx%d" (int (math.Ceil (mul $img.Width $scale))) (int (math.Ceil (mul $img.Height $scale)))) -}}
+  {{- end -}}
   {{- $img = $img.Fill "1200x630 jpg q82 Smart" -}}
 {{- else -}}
   {{- $img = false -}}

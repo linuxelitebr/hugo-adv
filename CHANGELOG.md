@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões seguem [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.1.5] - 2026-11-24
+
+### Corrigido
+- Imagem de compartilhamento (Open Graph) gerada da foto de uma pessoa saía esticada na horizontal quando a foto original tinha menos de 1200 px de largura ou 630 px de altura. A foto agora é ampliada proporcionalmente antes do recorte.
+
 ## [0.1.4] - 2026-11-24
 
 ### Corrigido
